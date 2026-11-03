@@ -44,13 +44,32 @@ Browser UI  <--HTTP-->  dobot_400_leslie.py  <--TCP-->  MG400 controller
    Optional: pass a different UI port, e.g. `python dobot_400_leslie.py 9000`.
 5. Your browser opens `http://localhost:8400`. Click **Connect**, then **Enable**, and wait until the mode reads **Enabled (idle)**.
 
+## Driving with the keyboard (video-game style)
+
+Click **Keyboard drive: OFF** so it turns **ON**, then:
+
+| Key | What the arm does |
+|---|---|
+| **W / S** | forward / back (X axis) |
+| **A / D** | left / right (Y axis) |
+| **↑ / ↓** | up / down (Z axis) |
+| **Space** | STOP (same as the red button) |
+
+- **Hold** a key to keep moving, **let go** to stop. Diagonals (W+D) work and are not faster.
+- Pick **Slow / Medium / Fast** under the keys. Start on Slow.
+- If a direction feels backwards, tick **flip W/S** or **flip A/D**.
+- The on-screen keys do the same thing if you hold them with the mouse or a finger.
+- How it works: while a key is held, the page sends one tiny `RelMovL` every 120 ms. When you let go, it stops sending. Switching tabs also stops it.
+
+---
+
 ## Features
 
 | Panel | What it does | Commands used |
 |---|---|---|
 | Live feedback | X/Y/Z/R, joint angles J1–J4, robot mode, speed scaling, DO/DI bits | port 30004 stream |
 | Power & state | Enable, disable, clear error, reset, continue queue, drag-teach, queries | `EnableRobot`, `DisableRobot`, `ClearError`, `ResetRobot`, `Continue`, `StartDrag`, `StopDrag`, `RobotMode`, `GetPose`, `GetAngle`, `GetErrorID` |
-| Jog | Relative steps in X/Y/Z/R or per joint (1–50 mm/°) | `RelMovL`, `RelJointMovJ` |
+| Drive | Hold W A S D (X/Y) and ↑ ↓ (Z) to move; R and joint steps are under **Advanced** | `RelMovL`, `RelJointMovJ` |
 | Go to position | Move to Cartesian or joint targets | `MovJ`, `MovL`, `JointMovJ`, `Sync` |
 | Motion parameters | Speed/acceleration sliders, user and tool frames | `SpeedFactor`, `AccJ`, `AccL`, `SpeedJ`, `SpeedL`, `CP`, `User`, `Tool` |
 | I/O | Toggle DO 1–8, tool outputs, read DI/DO | `DO`, `ToolDO`, `DI` |
